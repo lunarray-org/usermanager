@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+ * User manager.
+ * Copyright (C) 2013 Pal Hargitai (pal@lunarray.org)
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+">
+
+	<!-- Security -->
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager" />
+		<property name="filterChainDefinitions" ref="filterChainDefinitions" />
+		<property name="filters">
+			<util:map>
+				<entry key="authc" value-ref="formAuthenticationFilter" />
+			</util:map>
+		</property>
+	</bean>
+	<bean id="filterChainDefinitions" class="org.lunarray.usermanager.support.spring.ResourceStringFactory" init-method="init">
+		<property name="resource" value="classpath:filterDefinitions.properties" />
+	</bean>
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realms">
+			<list>
+				<ref bean="ldapRealm" />
+			</list>
+		</property>
+		<property name="sessionMode" value="native" />
+		<property name="sessionManager" ref="sessionManager" />
+		<property name="cacheManager" ref="cacheManager" />
+	</bean>
+
+	<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+		<property name="cacheManager" ref="ehCacheManager" />
+	</bean>
+	<bean id="ehCacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" />
+	<bean id="sessionManager" class="org.apache.shiro.web.session.mgt.ServletContainerSessionManager" />
+
+	<bean id="formAuthenticationFilter" class="org.apache.shiro.web.filter.authc.FormAuthenticationFilter">
+		<property name="loginUrl" value="/ui/login/" />
+		<property name="usernameParam" value="username" />
+		<property name="passwordParam" value="password" />
+		<property name="rememberMeParam" value="rememberMe" />
+		<property name="successUrl" value="/ui/" />
+	</bean>
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+	<bean id="ldapRealm" class="org.lunarray.usermanager.support.shiro.LdapRealm">
+		<property name="ldapContextFactory" ref="ldapContextFactory" />
+		<property name="userAttribute" value="${ldap.user.attribute}" />
+		<property name="userSubTree" value="${ldap.user.subTree}" />
+		<property name="roleAttribute" value="${ldap.role.attribute}" />
+		<property name="roleSubTree" value="${ldap.role.subTree}" />
+		<property name="roleCriteria" value="${ldap.role.criteria}" />
+		<property name="systemUser" value="${ldap.system.user}" />
+		<property name="systemPassword" value="${ldap.system.password}" />
+		<property name="cacheManager" ref="cacheManager" />
+		<property name="rolePermissionResolver" ref="rolePermissionResolver" />
+		<property name="userPermissionResolver" ref="userPermissionResolver" />
+		<property name="permissionResolver" ref="permissionResolver" />
+	</bean>
+	<bean id="rolePermissionResolver" class="org.lunarray.usermanager.support.shiro.PropertyRolePermissionResolver" init-method="init">
+		<property name="permissionResolver" ref="permissionResolver" />
+		<property name="rolePermission" ref="rolePermissionMapping" />
+	</bean>
+	<bean id="userPermissionResolver" class="org.lunarray.usermanager.support.shiro.FileUserPermissionResolver" init-method="init">
+		<property name="permissionResolver" ref="permissionResolver" />
+		<property name="userPermission" value="classpath:userpermissions.mapping" />
+	</bean>
+	<bean id="permissionResolver" class="org.apache.shiro.authz.permission.WildcardPermissionResolver" />
+	<!-- LDAP Factory -->
+	<bean id="ldapContextFactory" class="org.apache.shiro.realm.ldap.JndiLdapContextFactory">
+		<property name="url" value="${ldap.url}" />
+		<property name="systemUsername" value="${ldap.system.user}" />
+		<property name="systemPassword" value="${ldap.system.password}" />
+	</bean>
+</beans>

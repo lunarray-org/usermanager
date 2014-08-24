@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+ * User manager.
+ * Copyright (C) 2013 Pal Hargitai (pal@lunarray.org)
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+">
+	<!-- Context parameters. -->
+	<bean id="rolePermissionMapping" class="org.springframework.web.context.support.ServletContextParameterFactoryBean">
+		<property name="initParamName" value="rolePermissionMapping" />
+	</bean>
+	<bean id="applicationConfig" class="org.springframework.web.context.support.ServletContextParameterFactoryBean">
+		<property name="initParamName" value="applicationConfig" />
+	</bean>
+	<bean id="subtreeMapping" class="org.springframework.web.context.support.ServletContextParameterFactoryBean">
+		<property name="initParamName" value="subtreeMapping" />
+	</bean>
+	<bean id="objectClasses" class="org.springframework.web.context.support.ServletContextParameterFactoryBean">
+		<property name="initParamName" value="objectClasses" />
+	</bean>
+	<bean id="ldapConfig" class="org.springframework.web.context.support.ServletContextParameterFactoryBean">
+		<property name="initParamName" value="ldapConfig" />
+	</bean>
+	<bean id="propertyAttributeMapping" class="org.springframework.web.context.support.ServletContextParameterFactoryBean">
+		<property name="initParamName" value="propertyAttributeMapping" />
+	</bean>
+	<!-- Configuration. -->
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<array>
+				<ref bean="ldapConfig" />
+				<ref bean="applicationConfig" />
+			</array>
+		</property>
+	</bean>
+	<!-- Expose ever bean to the JSP -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="exposeContextBeansAsAttributes" value="true" />
+		<property name="prefix" value="/errors/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+</beans>

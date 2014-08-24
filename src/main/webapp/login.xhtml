@@ -1,0 +1,49 @@
+<!-- 
+ * User manager.
+ * Copyright (C) 2013 Pal Hargitai (pal@lunarray.org)
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:mg="http://model.lunarray.org/generation/0.9" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<ui:composition template="/WEB-INF/templates/anon-base.xhtml">
+	<ui:define name="content">
+		<form action="" method="post" class="form-horizontal">
+			<div class="control-group">
+				<label class="control-label" for="username">Username</label>
+				<div class="controls">
+					<input type="text" name="username" placeholder="Username" />
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="password">Password</label>
+				<div class="controls">
+					<input type="password" name="password" placeholder="Password" />
+				</div>
+			</div>
+			<div class="control-group">
+				<div class="controls">
+					<label class="checkbox"> <input type="checkbox" name="rememberMe" />Remember me
+					</label> <span>
+						<button type="submit" class="btn btn-primary">Sign in</button>
+					</span>
+				</div>
+			</div>
+			<c:if test="${not empty shiroLoginFailure}">
+				<div class="alert">Login failed!</div>
+			</c:if>
+		</form>
+	</ui:define>
+</ui:composition>
+</html>

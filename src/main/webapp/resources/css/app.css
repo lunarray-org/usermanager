@@ -1,0 +1,11 @@
+.mg_form_output_msg_panel {
+	padding-top: 10px;
+}
+
+.messages {
+	margin-left: 0px;
+}
+
+.messages li {
+	list-style-type: none;
+}

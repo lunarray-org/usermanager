@@ -1,0 +1,75 @@
+<!-- 
+ * User manager.
+ * Copyright (C) 2013 Pal Hargitai (pal@lunarray.org)
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+<pretty-config xmlns="http://ocpsoft.org/schema/rewrite-config-prettyfaces" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://ocpsoft.org/schema/rewrite-config-prettyfaces
+                      http://ocpsoft.org/xml/ns/prettyfaces/rewrite-config-prettyfaces.xsd">
+	<url-mapping id="login">
+		<pattern value="/ui/login/" />
+		<view-id value="/faces/login.xhtml" />
+	</url-mapping>
+	<url-mapping id="home">
+		<pattern value="/ui/" />
+		<view-id value="/faces/index.xhtml" />
+	</url-mapping>
+	<!-- Users -->
+	<url-mapping id="users">
+		<pattern value="/ui/users/" />
+		<view-id value="/faces/users/users.xhtml" />
+	</url-mapping>
+	<url-mapping id="createUser">
+		<pattern value="/ui/users/create" />
+		<view-id value="/faces/users/create-user.xhtml" />
+	</url-mapping>
+	<url-mapping id="updateUser">
+		<pattern value="/ui/users/#{userId : userParameter.userId}/update" />
+		<view-id value="/faces/users/update-user.xhtml" />
+	</url-mapping>
+	<url-mapping id="deleteUser">
+		<pattern value="/ui/users/#{userId : userParameter.userId}/delete" />
+		<view-id value="/faces/users/delete-user.xhtml" />
+	</url-mapping>
+	<url-mapping id="rolesUser">
+		<pattern value="/ui/users/#{userId : userParameter.userId}/roles" />
+		<view-id value="/faces/users/roles-user.xhtml" />
+	</url-mapping>
+	<url-mapping id="passwordUser">
+		<pattern value="/ui/users/#{userId : userParameter.userId}/password" />
+		<view-id value="/faces/users/password-user.xhtml" />
+	</url-mapping>
+	<!-- Roles -->
+	<url-mapping id="roles">
+		<pattern value="/ui/roles/" />
+		<view-id value="/faces/roles/roles.xhtml" />
+	</url-mapping>
+	<url-mapping id="createRole">
+		<pattern value="/ui/roles/create" />
+		<view-id value="/faces/roles/create-role.xhtml" />
+	</url-mapping>
+	<url-mapping id="updateRole">
+		<pattern value="/ui/roles/#{roleId : roleParameter.roleId}/update" />
+		<view-id value="/faces/roles/update-role.xhtml" />
+	</url-mapping>
+	<url-mapping id="deleteRole">
+		<pattern value="/ui/roles/#{roleId : roleParameter.roleId}/delete" />
+		<view-id value="/faces/roles/delete-role.xhtml" />
+	</url-mapping>
+	<url-mapping id="usersRole">
+		<pattern value="/ui/roles/#{roleId : roleParameter.roleId}/users" />
+		<view-id value="/faces/roles/users-role.xhtml" />
+	</url-mapping>
+</pretty-config>

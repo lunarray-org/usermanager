@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+ * User manager.
+ * Copyright (C) 2013 Pal Hargitai (pal@lunarray.org)
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+">
+	<!-- Model -->
+	<bean id="model" class="org.lunarray.usermanager.support.spring.SimpleModelFactory">
+		<property name="registry" ref="registry" />
+		<property name="resource" ref="resource" />
+	</bean>
+	<bean id="presentationModel" class="org.lunarray.usermanager.support.spring.PresQualModelFactory">
+		<property name="registry" ref="registry" />
+		<property name="resource" ref="presentationResource" />
+	</bean>
+	<bean id="converterTool" class="org.lunarray.model.descriptor.converter.def.DefaultConverterTool" />
+	<bean id="registry" class="org.lunarray.model.descriptor.registry.spring.SpringRegistry" />
+	<bean id="validator" class="org.lunarray.model.descriptor.validator.beanvalidation.BeanValidationValidator" />
+	<bean id="resource" class="org.lunarray.model.descriptor.resource.properties.PropertiesResource">
+		<constructor-arg>
+			<ref bean="entities" />
+		</constructor-arg>
+	</bean>
+	<bean id="presentationResource" class="org.lunarray.model.descriptor.resource.properties.PropertiesResource">
+		<constructor-arg>
+			<ref bean="presentationEntities" />
+		</constructor-arg>
+	</bean>
+	<bean id="entities" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location" value="classpath:entities.properties" />
+	</bean>
+	<bean id="presentationEntities" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location" value="classpath:presentation-entities.properties" />
+	</bean>
+	<!-- Model support -->
+	<bean id="modelLdapSupport" class="org.lunarray.usermanager.support.ModelLdapSupport">
+		<property name="model" ref="model" />
+		<property name="objectClasses" ref="objectclasses" />
+		<property name="propertyAttributeMapping" ref="propertyattributemapping" />
+		<property name="subTreeMapping" ref="subtreemapping" />
+	</bean>
+	<!-- Model support mapping -->
+	<bean id="objectclasses" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location" ref="objectClasses" />
+	</bean>
+	<bean id="propertyattributemapping" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location" ref="propertyAttributeMapping" />
+	</bean>
+	<bean id="subtreemapping" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location" ref="subtreeMapping" />
+	</bean>
+</beans>

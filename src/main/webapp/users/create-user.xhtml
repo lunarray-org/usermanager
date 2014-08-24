@@ -1,0 +1,41 @@
+<!-- 
+ * User manager.
+ * Copyright (C) 2013 Pal Hargitai (pal@lunarray.org)
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:mg="http://model.lunarray.org/generation/0.9">
+<ui:composition template="/WEB-INF/templates/base.xhtml">
+	<ui:define name="content">
+		<mg:generatedForm value="#{createUserPage.selectedUser}" variable="user" model="#{presentationModel}" clazz="#{createUserPage.userType}" outerForm="false"
+			qualifier="#{createUserPage.qualifier}" styleclassResolver="#{styleclassResolver}" messageLocation="bottom">
+			<div class="row">
+				<div class="pull-right">
+					<span>
+					<h:commandLink styleClass="btn btn-primary" action="#{createUserPage.create}">
+						<h:outputText value="Create User" />
+					</h:commandLink>
+					</span>
+					<span>
+					<h:link outcome="pretty:users" styleClass="btn">
+						<h:outputText value="Cancel" />
+					</h:link>
+					</span>
+				</div>
+			</div>
+		</mg:generatedForm>
+	</ui:define>
+</ui:composition>
+</html>
