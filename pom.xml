@@ -65,7 +65,7 @@
 	<properties>
 		<spring.version>4.3.25.RELEASE</spring.version>
 		<spring.mvc.version>4.3.25.RELEASE</spring.mvc.version>
-		<org.apache.shiro.version>1.5.0</org.apache.shiro.version>
+		<org.apache.shiro.version>1.6.0</org.apache.shiro.version>
 		<org.apache.myfaces.version>2.2.4</org.apache.myfaces.version>
 		<org.ocpsoft.rewrite.version>2.0.12.Final</org.ocpsoft.rewrite.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
